@@ -9,10 +9,9 @@ Eric: allowing users to report potholes using a visual map (zooming, panning, et
 Anish: displaying the maps with potholes and routes represented
 
 Whoever finishes first: CSS
-===
 
 Timeline: 
-
+===
 Week 1: Basic database entry, route plotting, map generation
 
 Week 2: Incorporation of DOT data, route plotting with potholes, map generation of potholes
