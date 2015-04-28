@@ -18,5 +18,5 @@ Week 2: Incorporation of DOT data, route plotting with potholes, map generation 
 
 Week 3: Integration of entry form with map, pothole removal, map generation with routes, zooming, panning
 
-Week 4: Debug everything (EVERYTHING), CSS stuff, extra stuff possibly 
+Week 4: Debug everything (EVERYTHING), CSS stuff, turn it into an extension 
 
