@@ -5,12 +5,12 @@
       html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
     <script type="text/javascript"
-      src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=AIzaSyA1d4Uv5Oeytn27IL1krnVZQ9VFIWkRPGQ">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK1UyEWlFGCiwcMN9IawcYhyjJsyO4zlg">
     </script>
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(40.718,-74.0142),
+          center: { lat: -34.397, lng: 150.644},
           zoom: 8
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
