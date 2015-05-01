@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+      src="http://maps.google.com/maps?file=api&v=2&sensor=false&key=AIzaSyA1d4Uv5Oeytn27IL1krnVZQ9VFIWkRPGQ">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(40.718,-74.0142),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+<div id="map-canvas"></div>
+  </body>
+</html>
