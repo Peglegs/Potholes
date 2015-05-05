@@ -1,3 +1,6 @@
+var directionsService = new google.maps.DirectionsService();
+var directionsDisplay;
+    console.log("hill");
 
 function initialize() {
 
@@ -5,10 +8,11 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(map);
   var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(-33.8902, 151.1759),
-      new google.maps.LatLng(-33.8474, 151.2631));
+      new google.maps.LatLng(40.70, -74.2),
+      new google.maps.LatLng(40.725, -73.9));
   map.fitBounds(defaultBounds);
 
   // Create the search box and link it to the UI element.
@@ -24,14 +28,15 @@ function initialize() {
   // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'places_changed', function() {
     var places = searchBox.getPlaces();
-
+      
     if (places.length == 0) {
       return;
     }
     for (var i = 0, marker; marker = markers[i]; i++) {
-      marker.setMap(null);
+	marker.setMap(null);
     }
-
+      console.log(places[0].formatted_address);
+      calcRoute(places[0].formatted_address);
     // For each place, get the icon, place name, and location.
     markers = [];
     var bounds = new google.maps.LatLngBounds();
@@ -69,4 +74,18 @@ function initialize() {
   });
 }
 
+function calcRoute(place) {
+  var start = "345 Chambers St, New York, NY 10282, USA";
+  var end = place;
+  var request = {
+    origin:start,
+    destination:end,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(result, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(result);
+    }
+  });
+}
 google.maps.event.addDomListener(window, 'load', initialize);
