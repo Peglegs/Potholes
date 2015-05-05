@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK1UyEWlFGCiwcMN9IawcYhyjJsyO4zlg">
-    </script>
-    <script src="routetest.js">
-    </script>
-  </head>
-  <body>
-<div id="map-canvas"></div>
-  </body>
+  <script type="text/javascript"
+	  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK1UyEWlFGCiwcMN9IawcYhyjJsyO4zlg">
+  </script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+  <script src="../static/thingifoundonline.js">
+  </script>
+  <style type="text/css">
+    html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    #map_canvas{
+    width: 600px; 
+    height: 400px;
+    }
+    .contextmenu{
+    visibility:hidden;
+    background:#ffffff;
+    border:1px solid #8888FF;
+    z-index: 10;  
+    position: relative;
+    width: 220px;
+    }
+    .contextmenu div{
+    padding-left: 5px
+    }
+    
+  </style>
+<div class="formDiv" id="map_canvas"></div>
 </html>
