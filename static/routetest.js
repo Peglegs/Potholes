@@ -1,15 +1,14 @@
 var directionsService = new google.maps.DirectionsService();
-var directionsDisplay;
+var routepaths = [];
+var map;
     console.log("hill");
 
 function initialize() {
 
   var markers = [];
-  var map = new google.maps.Map(document.getElementById('map-canvas'), {
+  map = new google.maps.Map(document.getElementById('map-canvas'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-    var directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsDisplay.setMap(map);
   var defaultBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(40.70, -74.2),
       new google.maps.LatLng(40.725, -73.9));
@@ -75,16 +74,28 @@ function initialize() {
 }
 
 function calcRoute(place) {
+    console.log(routepaths);
+  for (var i = 0; i < routepaths.length; i++){
+      routepaths[i].setMap(null);
+  }
+  routepaths =[];
   var start = "345 Chambers St, New York, NY 10282, USA";
   var end = place;
   var request = {
-    origin:start,
-    destination:end,
-    travelMode: google.maps.TravelMode.DRIVING
+      origin:start,
+      destination:end,
+      travelMode: google.maps.TravelMode.DRIVING,
+      provideRouteAlternatives:true
   };
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(result);
+        for (var i = 0, len = result.routes.length; i < len; i++) {
+            routepaths[routepaths.length]=new google.maps.DirectionsRenderer({
+                map: map,
+                directions: result,
+                routeIndex: i
+            });
+        }    
     }
   });
 }
