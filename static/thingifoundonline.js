@@ -1,6 +1,11 @@
 var map;
 var latitude;
 var longitude;
+var toHere = null;
+var fromHere = null;
+var toHereMarker;
+var fromHereMarker;
+var potholeHere;
 function initialize() {
     var latlng = new google.maps.LatLng(40.718,-74.0142);
     var myOptions = {
@@ -9,7 +14,13 @@ function initialize() {
 	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    google.maps.event.addListener(map, "rightclick",function(event){showContextMenu(event.latLng);});
+    google.maps.event.addListener(map, "rightclick",function(event){
+	latitude = event.latLng.lat();
+	longitude = event.latLng.lng();
+	console.log(latitude);
+	console.log(longitude);
+	showContextMenu(event.latLng);
+    });
     
 }
 function getCanvasXY(caurrentLatLng){
@@ -49,6 +60,7 @@ function showContextMenu(caurrentLatLng  ) {
     var contextmenuDir2;
     var contextmenuDir3;
     var contextmenuDir4;
+    var contextmenuDir5;
     projection = map.getProjection() ;
     $('.contextmenu').remove();
     
@@ -61,10 +73,12 @@ function showContextMenu(caurrentLatLng  ) {
     var e1 = document.getElementById("menu1");
     google.maps.event.addDomListener(e1,"click",function(event){
 	console.log("menu1");
+	potholeHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
+	contextmenuDir5.style.visibility="hidden";
     });
     
     contextmenuDir2 = document.createElement("div");
@@ -76,14 +90,12 @@ function showContextMenu(caurrentLatLng  ) {
     var e2 = document.getElementById("menu2");
     google.maps.event.addDomListener(e2,"click",function(event){
 	console.log("menu2");
-	latitude = event.latLng.lat();
-	longitude = event.latLng.lng();
-	console.log(latitude);
-	console.log(longitude);
+	toHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
+	contextmenuDir5.style.visibility="hidden";
     });
     
     contextmenuDir3 = document.createElement("div");
@@ -95,25 +107,46 @@ function showContextMenu(caurrentLatLng  ) {
     var e3 = document.getElementById("menu3");
     google.maps.event.addDomListener(e3,"click",function(event){
 	console.log("menu3");
+	var fromHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
+	contextmenuDir5.style.visibility="hidden";
     });
 
     contextmenuDir4 = document.createElement("div");
     contextmenuDir4.className  = 'contextmenu';
-    contextmenuDir4.innerHTML = "<a id='menu4'><div class=context>Cancel<\/div><\/a>";
+    contextmenuDir4.innerHTML = "<a id='menu4'><div class=context>Cancel Directions<\/div><\/a>";
     $(map.getDiv()).append(contextmenuDir4);    
     setMenuXY(caurrentLatLng);
     contextmenuDir4.style.visibility = "visible";
     var e4 = document.getElementById("menu4");
     google.maps.event.addDomListener(e4,"click",function(event){
 	console.log("menu4");
+	toHere = null;
+	fromHere = null;
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
+	contextmenuDir5.style.visibility="hidden";
+    });
+
+    contextmenuDir5 = document.createElement("div");
+    contextmenuDir5.className  = 'contextmenu';
+    contextmenuDir5.innerHTML = "<a id='menu5'><div class=context>Close Context Menu<\/div><\/a>";
+    $(map.getDiv()).append(contextmenuDir5);
+    setMenuXY(caurrentLatLng);
+    contextmenuDir5.style.visibility = "visible";
+    var e5 = document.getElementById("menu5");
+    google.maps.event.addDomListener(e5,"click",function(event){
+	console.log("menu5");
+	contextmenuDir1.style.visibility="hidden";
+	contextmenuDir2.style.visibility="hidden";
+	contextmenuDir3.style.visibility="hidden";
+	contextmenuDir4.style.visibility="hidden";
+	contextmenuDir5.style.visibility="hidden";
     });
 }
 $(document).ready(function(){
