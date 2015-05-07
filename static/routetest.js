@@ -1,7 +1,22 @@
+var potholes = ["345 Chambers St, New York, NY 10282, USA"];
 var directionsService = new google.maps.DirectionsService();
 var routepaths = [];
 var map;
     console.log("hill");
+function getlatlng( address){
+    var geocoder = new google.maps.Geocoder();
+    var out;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+	if (status == google.maps.GeocoderStatus.OK) {
+	    out= results[0].geometry.location;
+	}
+	else {
+	    out = null;
+	}
+	});
+    return out;
+}
+	
 
 function initialize() {
 
@@ -74,7 +89,6 @@ function initialize() {
 }
 
 function calcRoute(place) {
-    console.log(routepaths);
   for (var i = 0; i < routepaths.length; i++){
       routepaths[i].setMap(null);
   }
@@ -90,13 +104,27 @@ function calcRoute(place) {
   directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
         for (var i = 0, len = result.routes.length; i < len; i++) {
+
             routepaths[routepaths.length]=new google.maps.DirectionsRenderer({
                 map: map,
                 directions: result,
                 routeIndex: i
-            });
+            });	    
+	    for (var j =0; j < potholes.length; j++){
+		console.log(result.routes);
+		var line = new google.maps.Polyline({
+		    paths: google.maps.geometry.encoding.decodePath(result.routes[i].polyline)});
+		if (google.maps.geometry.poly.isLocationOnEdge(potholes[i],line)){
+		    console.log("Pothole here.");
+		}
+	    }
         }    
     }
   });
+}
+for (var i = 0; i < potholes.length; i++){
+    if (typeof potholes[i] === 'string'){
+	potholes[i] = getlatlng(potholes[i]);
+    }
 }
 google.maps.event.addDomListener(window, 'load', initialize);
