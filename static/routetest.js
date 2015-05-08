@@ -8,12 +8,13 @@ function getlatlng( address){
     var out;
     geocoder.geocode( { 'address': address}, function(results, status) {
 	if (status == google.maps.GeocoderStatus.OK) {
-	    out= results[0].geometry.location;
+	    out= [results[0].geometry.location.lat(),results[0].geometry.location.lng()];
+	    console.log(out);
 	}
 	else {
 	    out = null;
 	}
-	});
+    });
     return out;
 }
 	
@@ -110,10 +111,13 @@ function calcRoute(place) {
                 directions: result,
                 routeIndex: i
             });	    
+	    console.log(result.routes[i].overview_polyline);
 	    for (var j =0; j < potholes.length; j++){
-		console.log(result.routes);
+		var path = google.maps.geometry.encoding.decodePath(result.routes[i].overview_polyline);
 		var line = new google.maps.Polyline({
-		    paths: google.maps.geometry.encoding.decodePath(result.routes[i].polyline)});
+		    path: path});
+	console.log(line);
+
 		if (google.maps.geometry.poly.isLocationOnEdge(potholes[i],line)){
 		    console.log("Pothole here.");
 		}
@@ -122,9 +126,13 @@ function calcRoute(place) {
     }
   });
 }
+console.log(potholes);
 for (var i = 0; i < potholes.length; i++){
     if (typeof potholes[i] === 'string'){
-	potholes[i] = getlatlng(potholes[i]);
+	var tmp = getlatlng(potholes[i]);
+	potholes[i] = new google.maps.LatLng(tmp[0],tmp[1]);
+	console.log(potholes[i]);
     }
 }
+console.log(potholes);
 google.maps.event.addDomListener(window, 'load', initialize);
