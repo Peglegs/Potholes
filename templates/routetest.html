@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+  
   <script type="text/javascript"
-	  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK1UyEWlFGCiwcMN9IawcYhyjJsyO4zlg">
+	  src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places">
   </script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
   <script src="../static/thingifoundonline.js">
@@ -23,7 +24,38 @@
     .contextmenu div{
     padding-left: 5px
     }
+    #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+    }
+    
+    #pac-input:focus {
+        border-color: #4d90fe;
+    }
+    
+    .pac-container {
+    font-family: Roboto;
+    }
+    
+    #type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+    }
+    
+    #type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+    }
     
   </style>
-<div class="formDiv" id="map_canvas"></div>
+  <title>Places search box</title>
+  <div class="formDiv" id="map_canvas"></div>
 </html>
