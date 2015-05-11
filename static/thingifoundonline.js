@@ -1,4 +1,5 @@
 var map;
+var markers = [];
 var latitude;
 var longitude;
 var toHere = null;
@@ -7,6 +8,8 @@ var toHereMarker = null;
 var fromHereMarker = null;
 var potholeHere = null;
 var potholeMarker = null;
+var marker;
+var isUsingSearch = false;
 function initialize() {
     var latlng = new google.maps.LatLng(40.718,-74.0142);
     var myOptions = {
@@ -39,7 +42,7 @@ function initialize() {
 	    marker.setMap(null);
 	}
 	console.log(places[0].formatted_address);
-	calcRoute(places[0].formatted_address);
+	//calcRoute(places[0].formatted_address);
 	// For each place, get the icon, place name, and location.
 	markers = [];
 	var bounds = new google.maps.LatLngBounds();
@@ -52,12 +55,13 @@ function initialize() {
 		scaledSize: new google.maps.Size(25, 25)
 	    };
 	    // Create a marker for each place.
-	    var marker = new google.maps.Marker({
+	    marker = new google.maps.Marker({
 		map: map,
 		icon: image,
 		title: place.name,
 		position: place.geometry.location
 	    });
+	    isUsingSearch = true;
 	    markers.push(marker);
 	    bounds.extend(place.geometry.location);
 	}
@@ -155,6 +159,12 @@ function showContextMenu(caurrentLatLng  ) {
 	    map: map,
 	    title: 'Destination'
 	});
+	/*if(isUsingSearch == true){
+	    marker.setmap(null);
+	    marker = null;
+	    isUsingSearch = false;
+	};
+	*/
 	if(fromHere != null){
 	    console.log("getting directions");
 	    //calcRoute(fromHere,toHere);
@@ -181,6 +191,13 @@ function showContextMenu(caurrentLatLng  ) {
 	    map: map,
 	    title: 'Starting Point'
 	});
+	/*
+	if(isUsingSearch == true){
+	    marker.setmap(null);
+	    marker = null;
+	    isUsingSearch = false;
+	};
+	*/
 	if(toHere != null){
 	    console.log("getting directions");
 	    //calcRoute(fromHere,toHere);
@@ -198,10 +215,16 @@ function showContextMenu(caurrentLatLng  ) {
 	console.log("menu4");
 	toHere = null;
 	fromHere = null;
-	fromHereMarker.setMap(null);
-	toHereMarker.setMap(null);
-	toHereMarker = null;
-	fromHereMarker = null;
+	try{
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
+	}
+	catch(err){}
+	try{
+	    toHereMarker.setMap(null);
+	    toHereMarker = null;
+	}
+	catch(err){}
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
