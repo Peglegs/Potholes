@@ -21,4 +21,5 @@ Week 4: Debug everything (EVERYTHING), CSS stuff, turn it into an extension
 
 Week 1 Update:
   Andreas: routes can be plotted and displayed, checking routes against an array of potholes almost works but has a bug
+  
   Eric: potholes can be placed, destination and starting points can be determined and are ready for the calcRoute, search box almost works with choosing locations, marker display works
