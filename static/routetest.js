@@ -2,137 +2,125 @@ var potholes = ["345 Chambers St, New York, NY 10282, USA"];
 var directionsService = new google.maps.DirectionsService();
 var routepaths = [];
 var map;
-    console.log("hill");
-function getlatlng( address){
-    var geocoder = new google.maps.Geocoder();
-    var out;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-	if (status == google.maps.GeocoderStatus.OK) {
-	    out= [results[0].geometry.location.lat(),results[0].geometry.location.lng()];
-	    console.log(out);
-	}
-	else {
-	    out = null;
-	}
-    });
-    return out;
-}
-	
+console.log("hi");
 
 function initialize() {
 
-  var markers = [];
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  });
-  var defaultBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(40.70, -74.2),
-      new google.maps.LatLng(40.725, -73.9));
-  map.fitBounds(defaultBounds);
+    var markers = [];
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+	mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var defaultBounds = new google.maps.LatLngBounds(
+	new google.maps.LatLng(40.70, -74.2),
+	new google.maps.LatLng(40.725, -73.9));
+    map.fitBounds(defaultBounds);
 
-  // Create the search box and link it to the UI element.
-  var input = /** @type {HTMLInputElement} */(
-      document.getElementById('pac-input'));
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Create the search box and link it to the UI element.
+    var input = /** @type {HTMLInputElement} */(
+	document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-  var searchBox = new google.maps.places.SearchBox(
-    /** @type {HTMLInputElement} */(input));
+    var searchBox = new google.maps.places.SearchBox(
+	/** @type {HTMLInputElement} */(input));
 
-  // [START region_getplaces]
-  // Listen for the event fired when the user selects an item from the
-  // pick list. Retrieve the matching places for that item.
-  google.maps.event.addListener(searchBox, 'places_changed', function() {
-    var places = searchBox.getPlaces();
-      
-    if (places.length == 0) {
-      return;
-    }
-    for (var i = 0, marker; marker = markers[i]; i++) {
-	marker.setMap(null);
-    }
-      console.log(places[0].formatted_address);
-      calcRoute(places[0].formatted_address);
-    // For each place, get the icon, place name, and location.
-    markers = [];
-    var bounds = new google.maps.LatLngBounds();
-    for (var i = 0, place; place = places[i]; i++) {
-      var image = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
+    // [START region_getplaces]
+    // Listen for the event fired when the user selects an item from the
+    // pick list. Retrieve the matching places for that item.
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+	var places = searchBox.getPlaces();
+	
+	if (places.length == 0) {
+	    return;
+	}
+	for (var i = 0, marker; marker = markers[i]; i++) {
+	    marker.setMap(null);
+	}
+	console.log(places[0].formatted_address);
+	calcRoute(places[0].formatted_address);
+	// For each place, get the icon, place name, and location.
+	markers = [];
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = 0, place; place = places[i]; i++) {
+	    var image = {
+		url: place.icon,
+		size: new google.maps.Size(71, 71),
+		origin: new google.maps.Point(0, 0),
+		anchor: new google.maps.Point(17, 34),
+		scaledSize: new google.maps.Size(25, 25)
+	    };
 
-      // Create a marker for each place.
-      var marker = new google.maps.Marker({
-        map: map,
-        icon: image,
-        title: place.name,
-        position: place.geometry.location
-      });
+	    // Create a marker for each place.
+	    var marker = new google.maps.Marker({
+		map: map,
+		icon: image,
+		title: place.name,
+		position: place.geometry.location
+	    });
 
-      markers.push(marker);
+	    markers.push(marker);
 
-      bounds.extend(place.geometry.location);
-    }
+	    bounds.extend(place.geometry.location);
+	}
 
-    map.fitBounds(bounds);
-  });
-  // [END region_getplaces]
+	map.fitBounds(bounds);
+    });
+    // [END region_getplaces]
 
-  // Bias the SearchBox results towards places that are within the bounds of the
-  // current map's viewport.
-  google.maps.event.addListener(map, 'bounds_changed', function() {
-    var bounds = map.getBounds();
-    searchBox.setBounds(bounds);
-  });
+    // Bias the SearchBox results towards places that are within the bounds of the
+    // current map's viewport.
+    google.maps.event.addListener(map, 'bounds_changed', function() {
+	var bounds = map.getBounds();
+	searchBox.setBounds(bounds);
+    });
 }
 
 function calcRoute(place) {
-  for (var i = 0; i < routepaths.length; i++){
-      routepaths[i].setMap(null);
-  }
-  routepaths =[];
-  var start = "345 Chambers St, New York, NY 10282, USA";
-  var end = place;
-  var request = {
-      origin:start,
-      destination:end,
-      travelMode: google.maps.TravelMode.DRIVING,
-      provideRouteAlternatives:true
-  };
-  directionsService.route(request, function(result, status) {
-    if (status == google.maps.DirectionsStatus.OK) {
-        for (var i = 0, len = result.routes.length; i < len; i++) {
+    for (var i = 0; i < routepaths.length; i++){
+	routepaths[i].setMap(null);
+    }
+    routepaths =[];
+    var start = "345 Chambers St, New York, NY 10282, USA";
+    var end = place;
+    var request = {
+	origin:start,
+	destination:end,
+	travelMode: google.maps.TravelMode.DRIVING,
+	provideRouteAlternatives:true
+    };
+    directionsService.route(request, function(result, status) {
+	if (status == google.maps.DirectionsStatus.OK) {
+            for (var i = 0, len = result.routes.length; i < len; i++) {
 
-            routepaths[routepaths.length]=new google.maps.DirectionsRenderer({
-                map: map,
-                directions: result,
-                routeIndex: i
-            });	    
-	    console.log(result.routes[i].overview_polyline);
-	    for (var j =0; j < potholes.length; j++){
-		var path = google.maps.geometry.encoding.decodePath(result.routes[i].overview_polyline);
-		var line = new google.maps.Polyline({
-		    path: path});
-	console.log(line);
+		routepaths[routepaths.length]=new google.maps.DirectionsRenderer({
+                    map: map,
+                    directions: result,
+                    routeIndex: i
+		});	    
+		console.log(result.routes[i].overview_polyline);
+		for (var j =0; j < potholes.length; j++){
+		    var path = google.maps.geometry.encoding.decodePath(result.routes[i].overview_polyline);
+		    var line = new google.maps.Polyline({
+			path: path});
+		    console.log(line);
 
-		if (google.maps.geometry.poly.isLocationOnEdge(potholes[i],line)){
-		    console.log("Pothole here.");
+		    if (google.maps.geometry.poly.isLocationOnEdge(potholes[i],line)){
+			console.log("Pothole here.");
+		    }
 		}
-	    }
-        }    
-    }
-  });
+            }    
+	}
+    });
 }
-console.log(potholes);
+var geocoder = new google.maps.Geocoder();
 for (var i = 0; i < potholes.length; i++){
+    var tmp = i;
     if (typeof potholes[i] === 'string'){
-	var tmp = getlatlng(potholes[i]);
-	potholes[i] = new google.maps.LatLng(tmp[0],tmp[1]);
-	console.log(potholes[i]);
+	geocoder.geocode( { 'address': potholes[i]}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+		potholes[tmp] = results[0].geometry.location;
+		console.log(potholes);
+	    }
+	});
     }
 }
-console.log(potholes);
 google.maps.event.addDomListener(window, 'load', initialize);
