@@ -112,15 +112,24 @@ function calcRoute(place) {
     });
 }
 var geocoder = new google.maps.Geocoder();
-for (var i = 0; i < potholes.length; i++){
-    var tmp = i;
+var i = 0;
+var promise = new Promise(function(resolve,reject){
     if (typeof potholes[i] === 'string'){
 	geocoder.geocode( { 'address': potholes[i]}, function(results, status) {
 	    if (status == google.maps.GeocoderStatus.OK) {
-		potholes[tmp] = results[0].geometry.location;
-		console.log(potholes);
+		potholes[i] = results[0].geometry.location;
+		resolve("Success");
 	    }
+	    else { reject("failed");}
 	});
     }
-}
-google.maps.event.addDomListener(window, 'load', initialize);
+
+});
+promise.then(function() {
+    i = i +1;
+});
+promise.then(function(){
+    console.log(potholes);
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+});
