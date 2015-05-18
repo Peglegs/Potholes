@@ -10,6 +10,9 @@ var potholeHere = null;
 var potholeMarker = null;
 var marker;
 var isUsingSearch = false;
+var potholes = [ new google.maps.LatLng(40.778868, -73.784550)];
+var directionsService = new google.maps.DirectionsService();
+var routepath;
 function initialize() {
     var latlng = new google.maps.LatLng(40.718,-74.0142);
     var myOptions = {
@@ -167,7 +170,7 @@ function showContextMenu(caurrentLatLng  ) {
 	*/
 	if(fromHere != null){
 	    console.log("getting directions");
-	    //calcRoute(fromHere,toHere);
+	    calcRoute(fromHere,toHere);
 	};
     });
     
@@ -200,7 +203,7 @@ function showContextMenu(caurrentLatLng  ) {
 	*/
 	if(toHere != null){
 	    console.log("getting directions");
-	    //calcRoute(fromHere,toHere);
+	    calcRoute(fromHere,toHere);
 	};
     });
 
@@ -248,6 +251,52 @@ function showContextMenu(caurrentLatLng  ) {
 	contextmenuDir5.style.visibility="hidden";
     });
 }
+
+
+
+function calcRoute(start, end) {
+    var start = start;
+    var end = end;
+    var request = {
+	origin:start,
+	destination:end,
+	travelMode: google.maps.TravelMode.DRIVING,
+	provideRouteAlternatives:true
+    };
+    directionsService.route(request, function(result, status) {
+	if (status == google.maps.DirectionsStatus.OK) {
+	    var min = potholes.length;
+	    var index = 0;
+            for (var i = 0, len = result.routes.length; i < len; i++) {
+
+		var count = 0;
+		
+		for (var j =0; j < potholes.length; j++){
+		    var path = google.maps.geometry.encoding.decodePath(result.routes[i].overview_polyline);
+		    var line = new google.maps.Polyline({
+			path: path});
+
+		    if (google.maps.geometry.poly.isLocationOnEdge(potholes[j],line,10e-4)){
+			count++;
+		    }
+		}
+	    }
+	    if (count < min) {
+		min = count;
+		index = i;
+	    }
+	    routepath =new google.maps.DirectionsRenderer({
+                map: map,
+                directions: result,
+                routeIndex: index
+	    });    
+	    if (min > 0) {
+		alert("This route still contains some potholes. Please alter route manually to avoid them.");
+		}
+	}
+    });
+}	   
+
 $(document).ready(function(){
     initialize();
     
