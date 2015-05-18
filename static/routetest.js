@@ -1,6 +1,6 @@
 var potholes = [ new google.maps.LatLng(40.778868, -73.784550)];
 var directionsService = new google.maps.DirectionsService();
-var routepaths = [];
+var routepath;
 var map;
 console.log("hi");
 
@@ -89,30 +89,39 @@ function calcRoute(place) {
     };
     directionsService.route(request, function(result, status) {
 	if (status == google.maps.DirectionsStatus.OK) {
+	    var min = potholes.length;
+	    var index = 0;
             for (var i = 0, len = result.routes.length; i < len; i++) {
 
-		routepaths[routepaths.length]=new google.maps.DirectionsRenderer({
-                    map: map,
-                    directions: result,
-                    routeIndex: i
-		});	    
+		var count = 0;
+		 	    
 		for (var j =0; j < potholes.length; j++){
 		    var path = google.maps.geometry.encoding.decodePath(result.routes[i].overview_polyline);
 		    var line = new google.maps.Polyline({
 			path: path});
-		    console.log(line);
 
 		    if (google.maps.geometry.poly.isLocationOnEdge(potholes[j],line,10e-4)){
-			console.log("Pothole here.");
+			count++;
 		    }
 		}
-            }    
+	    }
+	    if (count < min) {
+		min = count;
+		index = i;
+	    }
+	    routepath =new google.maps.DirectionsRenderer({
+                map: map,
+                directions: result,
+                routeIndex: index
+	    });    
+	    if (min > 0) {
+		alert("This route still contains some potholes. Please alter route manually to avoid them.");
 	}
     });
 }
 var geocoder = new google.maps.Geocoder();
 var i = 0;
- var promise = new Promise(function(resolve,reject){
+var promise = new Promise(function(resolve,reject){
     if (typeof potholes[i] === 'string'){
 	geocoder.geocode( { 'address': potholes[i]}, function(results, status) {
 	    if (status == google.maps.GeocoderStatus.OK) {
