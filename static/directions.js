@@ -6,8 +6,6 @@ var toHere = null;
 var fromHere = null;
 var toHereMarker = null;
 var fromHereMarker = null;
-var potholeHere = null;
-var potholeMarker = null;
 var marker;
 var isUsingSearch = false;
 var potholes = [ new google.maps.LatLng(40.778868, -73.784550)];
@@ -111,36 +109,12 @@ function setMenuXY(caurrentLatLng){
 };
 function showContextMenu(caurrentLatLng  ) {
     var projection;
-    var contextmenuDir1;
     var contextmenuDir2;
     var contextmenuDir3;
     var contextmenuDir4;
     var contextmenuDir5;
     projection = map.getProjection() ;
     $('.contextmenu').remove();
-    
-    contextmenuDir1 = document.createElement("div");
-    contextmenuDir1.className  = 'contextmenu';
-    contextmenuDir1.innerHTML = "<a id='menu1'><div class=context>Place Pothole Here<\/div><\/a>";
-    $(map.getDiv()).append(contextmenuDir1);    
-    setMenuXY(caurrentLatLng);
-    contextmenuDir1.style.visibility = "visible";
-    var e1 = document.getElementById("menu1");
-    google.maps.event.addDomListener(e1,"click",function(event){
-	console.log("menu1");
-	potholeHere = new google.maps.LatLng(latitude,longitude);
-	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
-	contextmenuDir5.style.visibility="hidden";
-	potholeHereMarker = new google.maps.Marker({
-	    position: potholeHere,
-	    map: map,
-	    title: 'Pothole'
-	});
-	//Mark's pothole function
-    });
     
     contextmenuDir2 = document.createElement("div");
     contextmenuDir2.className  = 'contextmenu';
@@ -152,7 +126,6 @@ function showContextMenu(caurrentLatLng  ) {
     google.maps.event.addDomListener(e2,"click",function(event){
 	console.log("menu2");
 	toHere = new google.maps.LatLng(latitude,longitude);
-	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
@@ -184,7 +157,6 @@ function showContextMenu(caurrentLatLng  ) {
     google.maps.event.addDomListener(e3,"click",function(event){
 	console.log("menu3");
 	var fromHere = new google.maps.LatLng(latitude,longitude);
-	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
@@ -228,7 +200,6 @@ function showContextMenu(caurrentLatLng  ) {
 	    toHereMarker = null;
 	}
 	catch(err){}
-	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
@@ -244,7 +215,6 @@ function showContextMenu(caurrentLatLng  ) {
     var e5 = document.getElementById("menu5");
     google.maps.event.addDomListener(e5,"click",function(event){
 	console.log("menu5");
-	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";

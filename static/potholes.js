@@ -2,10 +2,6 @@ var map;
 var markers = [];
 var latitude;
 var longitude;
-var toHere = null;
-var fromHere = null;
-var toHereMarker = null;
-var fromHereMarker = null;
 var potholeHere = null;
 var potholeMarker = null;
 var marker;
@@ -109,9 +105,6 @@ function setMenuXY(caurrentLatLng){
 function showContextMenu(caurrentLatLng  ) {
     var projection;
     var contextmenuDir1;
-    var contextmenuDir2;
-    var contextmenuDir3;
-    var contextmenuDir4;
     var contextmenuDir5;
     projection = map.getProjection() ;
     $('.contextmenu').remove();
@@ -127,111 +120,24 @@ function showContextMenu(caurrentLatLng  ) {
 	console.log("menu1");
 	potholeHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
+	var image = {
+	    url: 'static/index.jpeg',
+	    size: new google.maps.Size(50, 30),
+	    origin: new google.maps.Point(0, 0),
+	    anchor: new google.maps.Point(25,15),
+	    scaledSize: new google.maps.Size(50, 30)
+	}
 	potholeHereMarker = new google.maps.Marker({
 	    position: potholeHere,
 	    map: map,
-	    title: 'Pothole'
+	    title: 'Pothole',
+	    icon: image
 	});
 	//Mark's pothole function
     });
     
-    contextmenuDir2 = document.createElement("div");
-    contextmenuDir2.className  = 'contextmenu';
-    contextmenuDir2.innerHTML = "<a id='menu2'><div class=context>Get Directions To Here<\/div><\/a>";
-    $(map.getDiv()).append(contextmenuDir2);
-    setMenuXY(caurrentLatLng);
-    contextmenuDir2.style.visibility = "visible";
-    var e2 = document.getElementById("menu2");
-    google.maps.event.addDomListener(e2,"click",function(event){
-	console.log("menu2");
-	toHere = new google.maps.LatLng(latitude,longitude);
-	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
-	contextmenuDir5.style.visibility="hidden";
-	toHereMarker = new google.maps.Marker({
-	    position: toHere,
-	    map: map,
-	    title: 'Destination'
-	});
-	/*if(isUsingSearch == true){
-	    marker.setmap(null);
-	    marker = null;
-	    isUsingSearch = false;
-	};
-	*/
-	if(fromHere != null){
-	    console.log("getting directions");
-	    //calcRoute(fromHere,toHere);
-	};
-    });
     
-    contextmenuDir3 = document.createElement("div");
-    contextmenuDir3.className  = 'contextmenu';
-    contextmenuDir3.innerHTML = "<a id='menu3'><div class=context>Get Directions From Here<\/div><\/a>";
-    $(map.getDiv()).append(contextmenuDir3);
-    setMenuXY(caurrentLatLng);
-    contextmenuDir3.style.visibility = "visible";
-    var e3 = document.getElementById("menu3");
-    google.maps.event.addDomListener(e3,"click",function(event){
-	console.log("menu3");
-	var fromHere = new google.maps.LatLng(latitude,longitude);
-	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
-	contextmenuDir5.style.visibility="hidden";
-	fromHereMarker = new google.maps.Marker({
-	    position: fromHere,
-	    map: map,
-	    title: 'Starting Point'
-	});
-	/*
-	if(isUsingSearch == true){
-	    marker.setmap(null);
-	    marker = null;
-	    isUsingSearch = false;
-	};
-	*/
-	if(toHere != null){
-	    console.log("getting directions");
-	    //calcRoute(fromHere,toHere);
-	};
-    });
-
-    contextmenuDir4 = document.createElement("div");
-    contextmenuDir4.className  = 'contextmenu';
-    contextmenuDir4.innerHTML = "<a id='menu4'><div class=context>Cancel Directions<\/div><\/a>";
-    $(map.getDiv()).append(contextmenuDir4);    
-    setMenuXY(caurrentLatLng);
-    contextmenuDir4.style.visibility = "visible";
-    var e4 = document.getElementById("menu4");
-    google.maps.event.addDomListener(e4,"click",function(event){
-	console.log("menu4");
-	toHere = null;
-	fromHere = null;
-	try{
-	    fromHereMarker.setMap(null);
-	    fromHereMarker = null;
-	}
-	catch(err){}
-	try{
-	    toHereMarker.setMap(null);
-	    toHereMarker = null;
-	}
-	catch(err){}
-	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
-	contextmenuDir5.style.visibility="hidden";
-    });
-
     contextmenuDir5 = document.createElement("div");
     contextmenuDir5.className  = 'contextmenu';
     contextmenuDir5.innerHTML = "<a id='menu5'><div class=context>Close Context Menu<\/div><\/a>";
@@ -242,9 +148,6 @@ function showContextMenu(caurrentLatLng  ) {
     google.maps.event.addDomListener(e5,"click",function(event){
 	console.log("menu5");
 	contextmenuDir1.style.visibility="hidden";
-	contextmenuDir2.style.visibility="hidden";
-	contextmenuDir3.style.visibility="hidden";
-	contextmenuDir4.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
     });
 }
