@@ -56,14 +56,14 @@ function initialize() {
 		scaledSize: new google.maps.Size(25, 25)
 	    };
 	    // Create a marker for each place.
-	    marker = new google.maps.Marker({
+	    /*marker = new google.maps.Marker({
 		map: map,
 		icon: image,
 		title: place.name,
 		position: place.geometry.location
-	    });
+	    });*/
 	    isUsingSearch = true;
-	    markers.push(marker);
+	    //markers.push(marker);
 	    bounds.extend(place.geometry.location);
 	}
 	map.fitBounds(bounds);
@@ -125,25 +125,38 @@ function showContextMenu(caurrentLatLng  ) {
     var e2 = document.getElementById("menu2");
     google.maps.event.addDomListener(e2,"click",function(event){
 	console.log("menu2");
+	if(toHere != null && fromHere != null){
+	    toHere = null;
+	    fromHere = null;
+	    toHereMarker.setMap(null);
+	    toHereMarker = null;
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
+	}
 	toHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
+	
 	toHereMarker = new google.maps.Marker({
 	    position: toHere,
 	    map: map,
 	    title: 'Destination'
 	});
 	/*if(isUsingSearch == true){
-	    marker.setmap(null);
-	    marker = null;
-	    isUsingSearch = false;
-	};
+	  marker.setmap(null);
+	  marker = null;
+	  isUsingSearch = false;
+	  };
 	*/
 	if(fromHere != null){
 	    console.log("getting directions");
 	    calcRoute(fromHere,toHere);
+	    toHereMarker.setMap(null);
+	    toHereMarker = null;
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
 	};
     });
     
@@ -156,11 +169,23 @@ function showContextMenu(caurrentLatLng  ) {
     var e3 = document.getElementById("menu3");
     google.maps.event.addDomListener(e3,"click",function(event){
 	console.log("menu3");
+	if(toHere != null && fromHere != null){
+	    toHere = null;
+	    fromHere = null;
+	    toHereMarker.setMap(null);
+	    toHereMarker = null;
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
+	}
 	var fromHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
+	if(fromHereMarker != null){
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
+	}
 	fromHereMarker = new google.maps.Marker({
 	    position: fromHere,
 	    map: map,
@@ -176,6 +201,10 @@ function showContextMenu(caurrentLatLng  ) {
 	if(toHere != null){
 	    console.log("getting directions");
 	    calcRoute(fromHere,toHere);
+	    toHereMarker.setMap(null);
+	    toHereMarker = null;
+	    fromHereMarker.setMap(null);
+	    fromHereMarker = null;
 	};
     });
 
