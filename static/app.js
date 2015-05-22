@@ -6,24 +6,25 @@ App.addRegions({
 })
 App.on("start", function(){
 	console.log("start")
-	var PlaceView = new App.PlaceView({model:p1})
+	var PlaceView = new App.PlaceView({})
 	//App.firstRegion.show(PlaceView)
 	
 	var PlacesView = new App.PlacesView({collection:c});
 	//App.secondRegion.show(PlacesView);
 
 	var CompositeView = new App.CompositeView({collection:c});
-	App.thirdRegion.show(CompositeView)
+	//App.thirdRegion.show(CompositeView)
 
 
 	Backbone.history.start();
 })
 App.PlaceView = Marionette.ItemView.extend({
 	template:"#first-template",
-	tagName:"tr"
+	tagName:"tr",
+
 })
 App.PlacesView = Marionette.CollectionView.extend({
-	childView: App.PlaceView
+	childView: App.PlaceView, 
 })
 
 App.CompositeView = Marionette.CompositeView.extend({
@@ -35,22 +36,59 @@ App.CompositeView = Marionette.CompositeView.extend({
 		    e.preventDefault()
 		    var avenue = $("#avenue").val();
 		    var street= $("#street").val();
-		    var BM = $("BN").val();
-		    this.collection.add(new Person({avenue:avenue, street:street, BN:BN}));
+		    var BN = $("#BN").val();
+		    var Latitude="";
+		    var Longitude="";
+		    var x = new Place({avenue:avenue, street:street, BN:BN, Latitude:Latitude,Longitude:Longitude});
+		    this.collection.create(x)
 			$("#avenue").val("");
 			$("#street").val("");
 			$("#BN").val("");
-	
-			}
-
 		}
 
+	}
+		
 })
 
-var Person = Backbone.Model.extend({});
-var Roster = Backbone.Collection.extend({
-	model:Person
+var Place = Backbone.Model.extend({
+	idAttribute: "_id",
+	defaults:{
+		avenue:"",
+		street:"",
+		BN:"",
+		Latitude:"",
+		Longitude:""
+	}
+});
+var Pothole = Backbone.Collection.extend({
+	model:Place,
+	url:'/update',
+	initialize: function(){
+		this.fetch()
+	}
 })
-var p1 = new Person({avenue:"1st avenue",street:"86th street", BN:444})
-var c = new Roster([p1])
+var c = new Pothole();
+
+var myController = Marionette.Controller.extend({
+	home:function(){
+
+	},
+	input:function(){
+		var compView=new App.CompositeView({collection:c})
+		App.thirdRegion.show(compView)
+	}
+	
+});
+App.controller = new myController();
+
+App.router = new Marionette.AppRouter({
+	controller:App.controller, 
+	appRoutes:{
+		"/":"home",
+		input:"input"
+	}
+});
+
+
+
 App.start();
