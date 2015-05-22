@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
 <script type="text/template" id="composite-template">
-New Player information:
+Pothole Information
 <form  class="pure-form pure-form-aligned">
     <fieldset>
         <div class="pure-control-group">
@@ -14,14 +14,22 @@ New Player information:
         </div>
         <div class="pure-control-group">
             <label for="name">Building Number</label>
-            <input id="BN" type="text" placeholder="Closest Building Number">
+            <input id="BN" type="text" placeholder="Closest Building Num">
         </div>
 
       
-            <button type="submit" class="pure-button pure-button-primary" id="add">Submit</button>
+            <button href="/update" type="submit" class="pure-button pure-button-primary" id="add">Submit</button>
     </fieldset>
 </form>
-
+<table class="pure-table pure-table-bordered">
+    <thead>
+			<tr><th>Name</th><th>Height</th><th>BN</th></tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+</script>
+<script type="text/template" id="data-template">
 <table class="pure-table pure-table-bordered">
 	<thead>
 			<tr><th>Name</th><th>Height</th><th>BN</th></tr>
@@ -41,13 +49,15 @@ New Player information:
 <div class="pure-g">
 	<div class="pure-u-1-12"></div>
 	<div class="pure-u-5-6">
-		<h1>Peglegs Roster</h1>
+		<h1>Potholes</h1>
 		</table>
 		<table class="pure-table pure-table-bordered" id="first-region">
 		<table class="pure-table pure-table-bordered" id="second-region">
 		</table>
 		<hr>
 		<div id="third-region"></div>
+		<a href="/"><button class="pure-button pure-button-primary">Home</button></a>
+		<a href="#potholes"><button class="pure-button pure-button-primary">Potholes</button></a>
 	</div>
 </div>
 
