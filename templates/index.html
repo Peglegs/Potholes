@@ -15,35 +15,27 @@ Pothole Information
         <div class="pure-control-group">
             <label for="name">Building Number</label>
             <input id="BN" type="text" placeholder="Closest Building Num">
-        </div>
-
-      
-            <button href="/update" type="submit" class="pure-button pure-button-primary" id="add">Submit</button>
+        </div style="visibility:hidden">  
+        <button href="/update" type="submit" class="pure-button pure-button-primary" id="add">Submit</button>
     </fieldset>
 </form>
 <table class="pure-table pure-table-bordered">
-    <thead>
-			<tr><th>Name</th><th>Height</th><th>BN</th></tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
-</script>
-<script type="text/template" id="data-template">
-<table class="pure-table pure-table-bordered">
 	<thead>
-			<tr><th>Name</th><th>Height</th><th>BN</th></tr>
+		<tr><th>Avenue</th><th>Street</th><th>BN</th><th>Latitude</th><th>Longitude</th></tr>
 	</thead>
 	<tbody>
+	
 	</tbody>
 </table>
 </script>
+
 
 <script type="text/template" id="first-template">
 	<td><%- avenue %></td>
 	<td><%- street %></td>
 	<td><%- BN %></td>
-
+	<td><%- Latitude %></td>
+	<td><%- Longitude%></td>
 </script>
 
 <div class="pure-g">
@@ -57,7 +49,7 @@ Pothole Information
 		<hr>
 		<div id="third-region"></div>
 		<a href="/"><button class="pure-button pure-button-primary">Home</button></a>
-		<a href="#potholes"><button class="pure-button pure-button-primary">Potholes</button></a>
+		<a href="#input"><button class="pure-button pure-button-primary">Input</button></a>
 	</div>
 </div>
 

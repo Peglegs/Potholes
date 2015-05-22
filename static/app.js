@@ -13,7 +13,7 @@ App.on("start", function(){
 	//App.secondRegion.show(PlacesView);
 
 	var CompositeView = new App.CompositeView({collection:c});
-	App.thirdRegion.show(CompositeView)
+	//App.thirdRegion.show(CompositeView)
 
 
 	Backbone.history.start();
@@ -37,7 +37,9 @@ App.CompositeView = Marionette.CompositeView.extend({
 		    var avenue = $("#avenue").val();
 		    var street= $("#street").val();
 		    var BN = $("#BN").val();
-		    var x = new Place({avenue:avenue, street:street, BN:BN});
+		    var Latitude="";
+		    var Longitude="";
+		    var x = new Place({avenue:avenue, street:street, BN:BN, Latitude:Latitude,Longitude:Longitude});
 		    this.collection.create(x)
 			$("#avenue").val("");
 			$("#street").val("");
@@ -49,7 +51,14 @@ App.CompositeView = Marionette.CompositeView.extend({
 })
 
 var Place = Backbone.Model.extend({
-	idAttribute: "_id"
+	idAttribute: "_id",
+	defaults:{
+		avenue:"",
+		street:"",
+		BN:"",
+		Latitude:"",
+		Longitude:""
+	}
 });
 var Pothole = Backbone.Collection.extend({
 	model:Place,
@@ -62,14 +71,13 @@ var c = new Pothole();
 
 var myController = Marionette.Controller.extend({
 	home:function(){
+
+	},
+	input:function(){
 		var compView=new App.CompositeView({collection:c})
 		App.thirdRegion.show(compView)
-	},
-
-	data:function(){
-		var pV = new App.PlacesView({collection:c})
-		App.secondRegion.show(pV)
 	}
+	
 });
 App.controller = new myController();
 
@@ -77,7 +85,7 @@ App.router = new Marionette.AppRouter({
 	controller:App.controller, 
 	appRoutes:{
 		"/":"home",
-		potholes:"data"
+		input:"input"
 	}
 });
 

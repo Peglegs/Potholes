@@ -31,41 +31,24 @@ def update():
         avenue = data['avenue']
         street = data['street']
         BN = data['BN']
+        Latitude=data['Latitude']
+        Longitude=data['Longitude']
         new_pothole = {
             'street': street,
             'avenue': avenue,
-            'BN': BN
-
+            'BN': BN,
+            'Latitude':Latitude,
+            "Longitude":Longitude,
         }
         print "post"
         return json.dumps(str(collection.insert(new_pothole)))
         
-
-@app.route('/update/<id>', methods=['PUT'])
-def updateWithID(id=None):
-    if request.method == 'PUT':
-        data = json.loads(request.data)
-        street = data['street']
-        avenue = data['avenue']
-        building = data['building']
-        update(street,avenue,building)
-        return ""
-
-@app.route('/<id>', methods = ['GET', 'POST'])
-def showPothole(id):
-    pothole = collection.find({'id': id})
-    for i in pothole:
-        print i
-        avenue = i['avenue']
-        street = i['street']
-        BN = i['BN']
-    return render_template("showPothole.html", avenue=avenue, street=street, BN=BN)
-    
+@app.route("/delete")
+def delete():
+    collection.drop()
+    return ""
 
 
-
-
-######################## JSON CODE ####################################
 
 
 if __name__ == "__main__":
