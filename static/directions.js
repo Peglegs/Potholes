@@ -128,9 +128,13 @@ function showContextMenu(caurrentLatLng  ) {
 	if(toHere != null && fromHere != null){
 	    toHere = null;
 	    fromHere = null;
+	    try{
 	    toHereMarker.setMap(null);
+	    } catch(err){}
 	    toHereMarker = null;
+	    try{
 	    fromHereMarker.setMap(null);
+	    }catch(err){}
 	    fromHereMarker = null;
 	}
 	toHere = new google.maps.LatLng(latitude,longitude);
@@ -172,12 +176,16 @@ function showContextMenu(caurrentLatLng  ) {
 	if(toHere != null && fromHere != null){
 	    toHere = null;
 	    fromHere = null;
+	    try{
 	    toHereMarker.setMap(null);
+	    }catch(err){}
 	    toHereMarker = null;
-	    fromHereMarker.setMap(null);
+	    try{
+	    fromHereMarker.setMap(null);}
+	    catch(err){}
 	    fromHereMarker = null;
 	}
-	var fromHere = new google.maps.LatLng(latitude,longitude);
+	fromHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir2.style.visibility="hidden";
 	contextmenuDir3.style.visibility="hidden";
 	contextmenuDir4.style.visibility="hidden";
