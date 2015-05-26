@@ -17,7 +17,9 @@ collection = db.potholes
 @app.route("/", methods=['Get','POST'])
 def index():
     return render_template("index.html")
-
+@app.route("/grab/")
+def grab():
+    return "fooled ya"
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if request.method == 'GET':
@@ -55,7 +57,7 @@ def delete():
 
 
 @app.route("/potholes")
-def index2():
+def index3():
     return render_template("potholes.html")
 
 if __name__ == "__main__":

@@ -135,7 +135,9 @@ function showContextMenu(caurrentLatLng  ) {
 	    try{
 	    fromHereMarker.setMap(null);
 	    }catch(err){}
-	    fromHereMarker = null;
+	    fromHereMarke = null;
+	    if(routepath){
+		routepath.setMap(null);}
 	}
 	toHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir2.style.visibility="hidden";
@@ -184,6 +186,8 @@ function showContextMenu(caurrentLatLng  ) {
 	    fromHereMarker.setMap(null);}
 	    catch(err){}
 	    fromHereMarker = null;
+	    if(routepath){
+		routepath.setMap(null);}
 	}
 	fromHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir2.style.visibility="hidden";
@@ -292,6 +296,9 @@ function calcRoute(start, end) {
 		min = count;
 		index = i;
 	    }
+	    if (routepath){
+		routepath.setMap(null);
+	    }
 	    routepath =new google.maps.DirectionsRenderer({
                 map: map,
                 directions: result,
@@ -303,8 +310,19 @@ function calcRoute(start, end) {
 	}
     });
 }	   
-
 $(document).ready(function(){
-    initialize();
+    var promise = new Promise(function(resolve,reject){
+	$.ajax({
+	    type: "GET",
+	    url:"/grab/",
+	    contentType: "application/json; charset=utf-8",
+	       success: function(data) {
+		   potholes = JSON.parse(data);
+	       }
+	}
+	      );
+	resolve("yes");
+    });
+    promise.then(function(resolve){initialize();});
     
 });
