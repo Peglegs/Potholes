@@ -19,7 +19,15 @@ def index():
     return render_template("index.html")
 @app.route("/grab/")
 def grab():
-    return "fooled ya"
+    ret = []
+    cursor= collection.find()
+    print cursor.count()
+    for i in range(cursor.count()):
+        ret.append(cursor[i])
+    for d in ret:
+        d['_id'] = str(d['_id'])
+    print ret
+    return json.dumps(ret)
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if request.method == 'GET':
