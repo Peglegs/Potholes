@@ -15,10 +15,12 @@ Pothole Information
         <div class="pure-control-group">
             <label for="name">Building Number</label>
             <input id="BN" type="text" placeholder="Closest Building Num">
-        </div style="visibility:hidden">  
+        </div>  
         <button href="/update" type="submit" class="pure-button pure-button-primary" id="add">Submit</button>
     </fieldset>
+    
 </form>
+
 <table class="pure-table pure-table-bordered">
 	<thead>
 		<tr><th>Avenue</th><th>Street</th><th>BN</th><th>Latitude</th><th>Longitude</th></tr>
@@ -27,6 +29,8 @@ Pothole Information
 	
 	</tbody>
 </table>
+<div class="formDiv" id="map_canvas"></div>
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 </script>
 
 
@@ -50,9 +54,15 @@ Pothole Information
 		<div id="third-region"></div>
 		<a href="/"><button class="pure-button pure-button-primary">Home</button></a>
 		<a href="#input"><button class="pure-button pure-button-primary">Input</button></a>
-	</div>
+		
+
+</div>
+
 </div>
 
 
 <script src="static/app.js"></script>
+
+
+
 {% endblock body %}

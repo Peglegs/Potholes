@@ -5,8 +5,63 @@
 		<script src="static/lib/lodash.js"></script>
 		<script src="static/lib/backbone.js"></script>
 		<script src="static/lib/backbone.marionette.js"></script>
-		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+		<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places">
+		</script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+		<script src="../static/potholes.js">
+		</script>
 		
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+		<style type="text/css">
+		  html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+		  #map_canvas{
+		  width: 1500px; 
+		  height: 700px;
+		  }
+		  .contextmenu{
+		  visibility:hidden;
+		  background:#ffffff;
+		  border:1px solid #8888FF;
+		  z-index: 10;  
+		  position: relative;
+		  width: 220px;
+		  }
+		  .contextmenu div{
+		  padding-left: 5px
+		  }
+		  #pac-input {
+		  background-color: #fff;
+		  font-family: Roboto;
+		  font-size: 15px;
+		  font-weight: 300;
+		  margin-left: 12px;
+		  padding: 0 11px 0 13px;
+		  text-overflow: ellipsis;
+		  width: 400px;
+		  }
+		  
+		  #pac-input:focus {
+		  border-color: #4d90fe;
+		  }
+		  
+		  .pac-container {
+		  font-family: Roboto;
+		  }
+		  
+		  #type-selector {
+		  color: #fff;
+		  background-color: #4d90fe;
+		  padding: 5px 11px 0px 11px;
+		  }
+		  
+		  #type-selector label {
+		  font-family: Roboto;
+		  font-size: 13px;
+		  font-weight: 300;
+		  }
+		  
+		</style>
 	</head>
 	<body>
 		{% block body %}
