@@ -319,10 +319,12 @@ $(document).ready(function(){
 	       success: function(data) {
 		   tmp = JSON.parse(data);
 		   for (var i = 0; i < tmp.length; i++){
-		       //add a check for not a number
-		       potholes[i] = new google.maps.LatLng(
-			   parseInt(tmp[i].Latitude),
-			   parseInt(tmp[i].Longitude));
+		       if (isNaN(parseInt(tmp[i].Latitude)) &&
+			   isNaN(parseInt(tmp[i].Longtitude))){
+			   potholes[i] = new google.maps.LatLng(
+			       parseInt(tmp[i].Latitude),
+			       parseInt(tmp[i].Longitude));
+		       }
 		   }
 		   console.log(potholes);
 	       }
