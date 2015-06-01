@@ -151,7 +151,4 @@ function showContextMenu(caurrentLatLng  ) {
 	contextmenuDir5.style.visibility="hidden";
     });
 }
-$(document).ready(function(){
-    initialize();
-    
-});
+
