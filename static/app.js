@@ -36,14 +36,17 @@ App.CompositeView = Marionette.CompositeView.extend({
 	    e.preventDefault();
 	    var avenue = $("#avenue").val();
 	    var street= $("#street").val();
+	    var Latitude = $("#Latitude").val();
 	    var BN = $("#BN").val();
-	    var Latitude="";
-	    var Longitude="";
+	    var Longitude = $("#Longitude").val();
 	    var x = new Place({avenue:avenue, street:street, BN:BN, Latitude:Latitude,Longitude:Longitude});
 	    this.collection.create(x);
 	    $("#avenue").val("");
 	    $("#street").val("");
 	    $("#BN").val("");
+	    $("#Latitude").val("");
+	    $("#Longitude").val("");
+	    
 	}
 	
     }
@@ -189,14 +192,17 @@ function showContextMenu(caurrentLatLng  ) {
     
     contextmenuDir1 = document.createElement("div");
     contextmenuDir1.className  = 'contextmenu';
-    contextmenuDir1.innerHTML = "<a id='menu1'><div class=context>Place Pothole Here<\/div><\/a>";
+    contextmenuDir1.innerHTML = "<a id='menu1'><div class=context>Select This Location<\/div><\/a>";
     $(map.getDiv()).append(contextmenuDir1);    
     setMenuXY(caurrentLatLng);
     contextmenuDir1.style.visibility = "visible";
     var e1 = document.getElementById("menu1");
     google.maps.event.addDomListener(e1,"click",function(event){
+	if(potholeMarker){
+	    potholeMarker.setMap(null);
+	}
 	console.log("menu1");
-	potholeHere = new google.maps.LatLng(latitude,longitude);
+	potholeMarker = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
 	var image = {
@@ -206,13 +212,18 @@ function showContextMenu(caurrentLatLng  ) {
 	    anchor: new google.maps.Point(25,15),
 	    scaledSize: new google.maps.Size(50, 30)
 	}
-	potholeHereMarker = new google.maps.Marker({
+	potholeMarker = new google.maps.Marker({
 	    position: potholeHere,
 	    map: map,
 	    title: 'Pothole',
 	    icon: image
 	});
+	potholeMarker.setMap(map);
 	//Mark's pothole function
+	var verytemp = document.getElementById("Latitude");
+	verytemp.value = latitude;
+	var alsoverytemp = document.getElementById("Longitude");
+	alsoverytemp.value = longitude;
     });
     
     
