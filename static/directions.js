@@ -314,10 +314,19 @@ $(document).ready(function(){
     var promise = new Promise(function(resolve,reject){
 	$.ajax({
 	    type: "GET",
-	    url:"/grab/",
+	    url: "/grab/",
 	    contentType: "application/json; charset=utf-8",
 	       success: function(data) {
-		   potholes = JSON.parse(data);
+		   tmp = JSON.parse(data);
+		   for (var i = 0; i < tmp.length; i++){
+		       if (!isNaN(parseInt(tmp[i].Latitude)) &&
+			   !isNaN(parseInt(tmp[i].Longtitude))){
+			   potholes[i] = new google.maps.LatLng(
+			       parseInt(tmp[i].Latitude),
+			       parseInt(tmp[i].Longitude));
+		       }
+		   }
+		   console.log(potholes);
 	       }
 	}
 	      );
