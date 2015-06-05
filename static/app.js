@@ -198,11 +198,12 @@ function showContextMenu(caurrentLatLng  ) {
     contextmenuDir1.style.visibility = "visible";
     var e1 = document.getElementById("menu1");
     google.maps.event.addDomListener(e1,"click",function(event){
-	if(potholeMarker){
+	if(potholeMarker != null){
 	    potholeMarker.setMap(null);
+	    potholeMarker = null;
 	}
 	console.log("menu1");
-	potholeMarker = new google.maps.LatLng(latitude,longitude);
+	potholeHere = new google.maps.LatLng(latitude,longitude);
 	contextmenuDir1.style.visibility="hidden";
 	contextmenuDir5.style.visibility="hidden";
 	var image = {
@@ -218,7 +219,6 @@ function showContextMenu(caurrentLatLng  ) {
 	    title: 'Pothole',
 	    icon: image
 	});
-	potholeMarker.setMap(map);
 	//Mark's pothole function
 	var verytemp = document.getElementById("Latitude");
 	verytemp.value = latitude;
