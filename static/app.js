@@ -34,16 +34,12 @@ App.CompositeView = Marionette.CompositeView.extend({
     events : {
 	"click #add" : function(e) {
 	    e.preventDefault();
-	    var avenue = $("#avenue").val();
-	    var street= $("#street").val();
+	    var address= $("#address").val();
 	    var Latitude = $("#Latitude").val();
-	    var BN = $("#BN").val();
 	    var Longitude = $("#Longitude").val();
-	    var x = new Place({avenue:avenue, street:street, BN:BN, Latitude:Latitude,Longitude:Longitude});
+	    var x = new Place({address:address, Latitude:Latitude,Longitude:Longitude});
 	    this.collection.create(x);
-	    $("#avenue").val("");
-	    $("#street").val("");
-	    $("#BN").val("");
+	    $("#address").val("");
 	    $("#Latitude").val("");
 	    $("#Longitude").val("");
 	    
@@ -55,14 +51,11 @@ App.CompositeView = Marionette.CompositeView.extend({
 
 var Place = Backbone.Model.extend({
     idAttribute: "_id",
-    defaults:{
-	avenue:"",
-	street:"",
-	BN:"",
+    address:"",
 	Latitude:"",
 	Longitude:""
-	}
 });
+
 var Pothole = Backbone.Collection.extend({
     model:Place,
     url:'/update',

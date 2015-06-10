@@ -41,15 +41,11 @@ def update():
         return json.dumps(js)
     elif request.method == 'POST':
         data=json.loads(request.data)
-        avenue = data['avenue']
-        street = data['street']
-        BN = data['BN']
+        address=data['address']
         Latitude=data['Latitude']
         Longitude=data['Longitude']
         new_pothole = {
-            'street': street,
-            'avenue': avenue,
-            'BN': BN,
+            'address':address,
             'Latitude':Latitude,
             "Longitude":Longitude,
         }

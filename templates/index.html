@@ -5,16 +5,8 @@ Pothole Information
 <form  class="pure-form pure-form-aligned">
     <fieldset>
         <div class="pure-control-group">
-            <label for="name">Avenue</label>
-            <input id="avenue" type="text" placeholder="Avenue of Pothole">
-        </div>
-        <div class="pure-control-group">
-            <label for="name">Street</label>
-            <input id="street" type="text" placeholder="Street of Pothole">
-        </div>
-        <div class="pure-control-group">
-            <label for="name">Building Number</label>
-            <input id="BN" type="text" placeholder="Closest Building Num">
+            <label for="name">Address</label>
+            <input id="address" type="text" placeholder="Address of the pothole">
         </div>
 	<h3>Inputting latitude and longitude is optional</h3>
 	<div class="pure-control-group">
@@ -32,7 +24,7 @@ Pothole Information
 
 <table class="pure-table pure-table-bordered">
 	<thead>
-		<tr><th>Avenue</th><th>Street</th><th>BN</th><th>Latitude</th><th>Longitude</th></tr>
+		<tr><th>Address</th><th>Latitude</th><th>Longitude</th></tr>
 	</thead>
 	<tbody>
 	
@@ -44,9 +36,7 @@ Pothole Information
 
 
 <script type="text/template" id="first-template">
-	<td><%- avenue %></td>
-	<td><%- street %></td>
-	<td><%- BN %></td>
+	<td><%- address%></td>
 	<td><%- Latitude %></td>
 	<td><%- Longitude%></td>
 </script>
