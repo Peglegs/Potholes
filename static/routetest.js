@@ -120,7 +120,6 @@ function calcRoute(place) {
     });
 }
 var geocoder = new google.maps.Geocoder();
-var i = 0;
 var promise = new Promise(function(resolve,reject){
     if (typeof potholes[i] === 'string'){
 	geocoder.geocode( { 'address': potholes[i]}, function(results, status) {

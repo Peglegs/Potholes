@@ -34,11 +34,39 @@ App.CompositeView = Marionette.CompositeView.extend({
     events : {
 	"click #add" : function(e) {
 	    e.preventDefault();
-	    var address= $("#address").val();
+	    var myaddress= $("#address").val();
 	    var Latitude = $("#Latitude").val();
 	    var Longitude = $("#Longitude").val();
-	    var x = new Place({address:address, Latitude:Latitude,Longitude:Longitude});
-	    this.collection.create(x);
+	    var that = this;
+	    var x = new Place({address:myaddress, Latitude:Latitude,Longitude:Longitude});
+
+	    if (isNaN(parseInt(Latitude)) || isNaN(parseInt(Longtitude))){
+		var geocoder = new google.maps.Geocoder();
+		var promise = new Promise(function(resolve,reject){
+		    geocoder.geocode( { 'address': myaddress}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+			    Latitude = results[0].geometry.location.lat();
+			    Longitude = results[0].geometry.location.lng();
+			    console.log(Longitude);
+			    resolve("Success");
+			}
+			reject("failed");
+		    });
+		});
+		
+		promise.then(function(){
+		    x = new Place({address:myaddress, Latitude:Latitude,Longitude:Longitude});
+		
+		    that.collection.create(x);
+		},
+			     function(){
+				 alert("We couldn't find the address you input. Please try again.");
+			     });
+	    }
+	    else {
+		that.collection.create(x);
+	    }
+			     
 	    $("#address").val("");
 	    $("#Latitude").val("");
 	    $("#Longitude").val("");
