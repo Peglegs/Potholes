@@ -105,9 +105,10 @@ var markers = [];
 var latitude;
 var longitude;
 var potholeHere = null;
-var potholeMarker = null;
-var marker;
-var isUsingSearch = false;
+	var potholeMarker = null;
+	var marker;
+	var isUsingSearch = false;
+	var otherpotholes = [];
 function initialize() {
     var latlng = new google.maps.LatLng(40.718,-74.0142);
     var myOptions = {
@@ -116,6 +117,48 @@ function initialize() {
 	mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var promise2 = new Promise(function(resolve,reject){
+	$.ajax({
+	    type: "GET",
+	    url: "/grab/",
+	    contentType: "application/json; charset=utf-8",
+	    success: function(data) {
+		tmp = JSON.parse(data);
+		console.log(tmp.length);
+		for (var i = 0; i < tmp.length; i++){
+		    console.log(parseInt(tmp[i].Latitude));
+		    if (!isNaN(parseInt(tmp[i].Latitude)) &&
+			!isNaN(parseInt(tmp[i].Longtitude))){
+			console.log("ok kinda");
+			otherpotholes[i] = new google.maps.LatLng(
+			    parseInt(tmp[i].Latitude),
+			    parseInt(tmp[i].Longitude));
+		    }
+		}
+		console.log(otherpotholes);
+	    }
+	}
+	      );
+	resolve("yes");
+    });
+    promise2.then(function(resolve){
+	for (i=0;i<otherpotholes.length;i++){
+	    var image = {
+	    url: 'static/index.jpeg',
+	    size: new google.maps.Size(50, 30),
+	    origin: new google.maps.Point(0, 0),
+	    anchor: new google.maps.Point(25,15),
+	    scaledSize: new google.maps.Size(50, 30)
+	    }
+	    markertemp = new google.maps.Marker({
+		 map: map,
+		 icon: image,
+		 title: 'Pothole',
+		 position: otherpotholes[i]
+	    });
+	};},
+		  function(reject){alert("Something went wrong. Please contact the site administrator.");});
+    
     google.maps.event.addListener(map, "rightclick",function(event){
 	latitude = event.latLng.lat();
 	longitude = event.latLng.lng();
