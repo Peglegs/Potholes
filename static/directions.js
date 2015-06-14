@@ -319,11 +319,11 @@ $(document).ready(function(){
 	       success: function(data) {
 		   tmp = JSON.parse(data);
 		   for (var i = 0; i < tmp.length; i++){
-		       if (!isNaN(parseInt(tmp[i].Latitude)) &&
-			   !isNaN(parseInt(tmp[i].Longtitude))){
+		       if (!isNaN(parseFloat(tmp[i].Latitude)) &&
+			   !isNaN(parseFloat(tmp[i].Longtitude))){
 			   potholes[i] = new google.maps.LatLng(
-			       parseInt(tmp[i].Latitude),
-			       parseInt(tmp[i].Longitude));
+			       parseFloat(tmp[i].Latitude),
+			       parseFloat(tmp[i].Longitude));
 		       }
 		   }
 		   console.log(potholes);
