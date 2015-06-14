@@ -11,7 +11,7 @@ var isUsingSearch = false;
 var potholes = [ new google.maps.LatLng(40.778868, -73.784550)];
 var directionsService = new google.maps.DirectionsService();
 var routepath;
-function initialize2() {
+function initialize() {
     var latlng = new google.maps.LatLng(40.718,-74.0142);
     var myOptions = {
 	zoom: 15,
@@ -332,6 +332,6 @@ $(document).ready(function(){
 	      );
 	resolve("yes");
     });
-    promise.then(function(resolve){initialize2();});
+    promise.then(function(resolve){initialize();});
     
 });
