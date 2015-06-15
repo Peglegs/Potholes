@@ -3,7 +3,8 @@
 <<<<<<< HEAD
 
 
-URL: 104.236.253.232:5000
+URL: http://104.236.253.232:5000/
+
 
 Mark: users entering pothole locations into database, pulling info from the DOT database and entering it into ours
 
