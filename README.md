@@ -1,10 +1,9 @@
 
 # Potholes
-<<<<<<< HEAD
-
+##By Mark Norwich, Andreas Wang, Eric Morgenstern
 
 URL: http://104.236.253.232:5000/
-
+Video:https://www.youtube.com/watch?v=tnvrj8AecyE
 
 Mark: users entering pothole locations into database, pulling info from the DOT database and entering it into ours
 
@@ -33,4 +32,3 @@ Added marionette front end.
 Working on database storage. 
 Much of my work is on laptop at home which i havn't pushed yet.  
 By May 15th full database use should be deployed.
->>>>>>> d077d19d52bc6ba9d6fab4af0659e7f04b746b0e
