@@ -40,7 +40,7 @@ App.CompositeView = Marionette.CompositeView.extend({
 	    var that = this;
 	    var x = new Place({address:myaddress, Latitude:Latitude,Longitude:Longitude});
 
-	    if (isNaN(parseInt(Latitude)) || isNaN(parseInt(Longtitude))){
+	    if (isNaN(parseInt(Latitude)) || isNaN(parseInt(Longitude))){
 		var geocoder = new google.maps.Geocoder();
 		var promise = new Promise(function(resolve,reject){
 		    geocoder.geocode( { 'address': myaddress}, function(results, status) {
